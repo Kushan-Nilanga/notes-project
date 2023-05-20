@@ -62,6 +62,16 @@ steps:
         "service.dockerfile",
       ]
     dir: "./ui-service"
+  # pull mongo image and push to gcr
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["pull", "mongo"]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "tag",
+        "mongo",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo:latest",
+      ]
 
 images:
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
@@ -69,3 +79,4 @@ images:
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo"

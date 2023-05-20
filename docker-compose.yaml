@@ -12,6 +12,17 @@ services:
       dockerfile: service.dockerfile
     ports:
       - "80:3000"
+    restart: always
+  bff-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./bff-service/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: always
 
   # -------------------------------------
   # notes service
@@ -23,6 +34,19 @@ services:
       dockerfile: service.dockerfile
     ports:
       - "81:3000"
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://root:example@notes-db:27017/notes
+  notes-db:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./notes-service/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: always
 
   # -------------------------------------
   # auth service
@@ -34,6 +58,19 @@ services:
       dockerfile: service.dockerfile
     ports:
       - "82:3000"
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://root:example@auth-db:27017/auth
+  auth-db:
+    image: mongo
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./auth-service/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: always
 
   # -------------------------------------
   # audit service
@@ -45,3 +82,27 @@ services:
       dockerfile: service.dockerfile
     ports:
       - "83:3000"
+    restart: always
+    environment:
+      MONGO_URL: mongodb://root:example@audit-db:27017/audit
+  audit-db:
+    image: mongo
+    ports:
+      - "27020:27017"
+    volumes:
+      - ./audit-service/db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: always
+  # -------------------------------------
+  # ui service
+  # -------------------------------------
+  ui:
+    image: ui-service
+    build:
+      context: ./ui-service
+      dockerfile: service.dockerfile
+    ports:
+      - "84:3000"
+    restart: always
