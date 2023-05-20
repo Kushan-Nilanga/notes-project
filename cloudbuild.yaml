@@ -4,19 +4,51 @@
 steps:
   # build audit-service
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/loyal-gateway-387301/audit-service", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/loyal-gateway-387301/audit-service",
+        ".",
+        "-f",
+        "service.dockerfile",
+      ]
     dir: "./audit-service"
   # build auth-service
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/loyal-gateway-387301/auth-service", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/loyal-gateway-387301/auth-service",
+        ".",
+        "-f",
+        "service.dockerfile",
+      ]
     dir: "./auth-service"
   # build bff-service
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/loyal-gateway-387301/bff-service", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/loyal-gateway-387301/bff-service",
+        ".",
+        "-f",
+        "service.dockerfile",
+      ]
     dir: "./bff-service"
   # build notes-service
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/loyal-gateway-387301/notes-service", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/loyal-gateway-387301/notes-service",
+        ".",
+        "-f",
+        "service.dockerfile",
+      ]
     dir: "./notes-service"
 
 images:
