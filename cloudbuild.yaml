@@ -50,9 +50,22 @@ steps:
         "service.dockerfile",
       ]
     dir: "./notes-service"
+  # build ui-service
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
+        ".",
+        "-f",
+        "service.dockerfile",
+      ]
+    dir: "./ui-service"
 
 images:
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth"
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui"
