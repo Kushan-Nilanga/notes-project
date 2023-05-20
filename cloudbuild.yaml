@@ -8,7 +8,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/audit",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
         ".",
         "-f",
         "service.dockerfile",
@@ -20,7 +20,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/auth",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
         ".",
         "-f",
         "service.dockerfile",
@@ -32,7 +32,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/bff",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
         ".",
         "-f",
         "service.dockerfile",
@@ -44,7 +44,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
         ".",
         "-f",
         "service.dockerfile",
@@ -52,11 +52,7 @@ steps:
     dir: "./notes-service"
 
 images:
-  # push audit-service artifact registry
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/audit"
-  # push auth-service artifact registry
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/auth"
-  # push bff-service artifact registry
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/bff"
-  # push notes-service artifact registry
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
+  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
