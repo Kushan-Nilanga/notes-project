@@ -17,6 +17,9 @@ spec:
           image: "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:${IMAGE_TAG}"
           ports:
             - containerPort: 3000
+          env:
+            - name: IMAGE_TAG
+              value: $(IMAGE_TAG)
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,6 +40,9 @@ spec:
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:${IMAGE_TAG}
           ports:
             - containerPort: 3000
+          env:
+            - name: IMAGE_TAG
+              value: $(IMAGE_TAG)
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -64,6 +70,8 @@ spec:
               value: example
             - name: MONGO_SERVICE_HOST
               value: audit-db
+            - name: IMAGE_TAG
+              value: $(IMAGE_TAG)
         - name: audit-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
@@ -106,6 +114,8 @@ spec:
               value: example
             - name: MONGO_SERVICE_HOST
               value: audit-db
+            - name: IMAGE_TAG
+              value: $(IMAGE_TAG)
         - name: auth-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
@@ -148,6 +158,8 @@ spec:
               value: example
             - name: MONGO_SERVICE_HOST
               value: notes-db
+            - name: IMAGE_TAG
+              value: $(IMAGE_TAG)
         - name: notes-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
