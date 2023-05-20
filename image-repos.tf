@@ -22,6 +22,14 @@ resource "google_artifact_registry_repository" "audit" {
   format        = "DOCKER"
 }
 
+# bff
+resource "google_artifact_registry_repository" "bff" {
+  location      = local.google.region
+  repository_id = "bff"
+  description   = "bff docker image"
+  format        = "DOCKER"
+}
+
 output "gcr_notes_repository" {
   value = "https://console.cloud.google.com/artifacts/docker/${local.google.project_id}/${local.google.region}/${google_artifact_registry_repository.notes.repository_id}?project=${local.google.project_id}"
 }
@@ -34,3 +42,6 @@ output "gcr_audit_repository" {
   value = "https://console.cloud.google.com/artifacts/docker/${local.google.project_id}/${local.google.region}/${google_artifact_registry_repository.audit.repository_id}?project=${local.google.project_id}"
 }
 
+output "gcr_bff_repository" {
+  value = "https://console.cloud.google.com/artifacts/docker/${local.google.project_id}/${local.google.region}/${google_artifact_registry_repository.bff.repository_id}?project=${local.google.project_id}"
+}
