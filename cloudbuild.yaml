@@ -8,7 +8,7 @@ steps:
       [
         "build",
         "-t",
-        "gcr.io/loyal-gateway-387301/audit",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/audit",
         ".",
         "-f",
         "service.dockerfile",
@@ -20,7 +20,7 @@ steps:
       [
         "build",
         "-t",
-        "gcr.io/loyal-gateway-387301/auth",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/auth",
         ".",
         "-f",
         "service.dockerfile",
@@ -32,7 +32,7 @@ steps:
       [
         "build",
         "-t",
-        "gcr.io/loyal-gateway-387301/bff",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/bff",
         ".",
         "-f",
         "service.dockerfile",
@@ -44,7 +44,7 @@ steps:
       [
         "build",
         "-t",
-        "gcr.io/loyal-gateway-387301/notes",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes",
         ".",
         "-f",
         "service.dockerfile",
