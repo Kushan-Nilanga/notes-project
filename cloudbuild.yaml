@@ -2,6 +2,10 @@
 # https://cloud.google.com/cloud-build/docs/build-config
 
 steps:
+  # ------------------------------------
+  # Build Staget
+  # ------------------------------------
+
   # build audit-service
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -62,7 +66,50 @@ steps:
         "service.dockerfile",
       ]
     dir: "./ui-service"
-    # deploy to GKE
+
+  # ------------------------------------
+  # Push Stage
+  # ------------------------------------
+  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
+  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth"
+  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
+  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
+  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
+      ]
+
+  # ------------------------------------
+  # apply deployment and service config
+  # ------------------------------------
   - name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "deployment.yaml"]
     env:
@@ -74,12 +121,64 @@ steps:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
       - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
 
-images:
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth"
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
-  - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui"
+  # ------------------------------------
+  # set image
+  # ------------------------------------
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/notes-deployment",
+        "notes=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/auth-deployment",
+        "auth=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/bff-deployment",
+        "bff=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/audit-deployment",
+        "audit=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/ui-deployment",
+        "ui=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
 
 options:
   logging: CLOUD_LOGGING_ONLY
