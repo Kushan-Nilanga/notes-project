@@ -62,6 +62,8 @@ spec:
               value: root
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
+            - name: MONGO_SERVICE_HOST
+              value: audit-db
         - name: audit-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
@@ -102,6 +104,8 @@ spec:
               value: root
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
+            - name: MONGO_SERVICE_HOST
+              value: audit-db
         - name: auth-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
@@ -142,6 +146,8 @@ spec:
               value: root
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
+            - name: MONGO_SERVICE_HOST
+              value: notes-db
         - name: notes-db
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
           ports:
