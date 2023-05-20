@@ -2,6 +2,29 @@
 # https://cloud.google.com/cloud-build/docs/build-config
 
 steps:
-  # simple echo
-  - name: "ubuntu"
-    args: ["echo", "Hello, world!"]
+  # build audit-service
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/loyal-gateway-387301/audit-service", "."]
+    dir: "./audit-service"
+  # build auth-service
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/loyal-gateway-387301/auth-service", "."]
+    dir: "./auth-service"
+  # build bff-service
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/loyal-gateway-387301/bff-service", "."]
+    dir: "./bff-service"
+  # build notes-service
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/loyal-gateway-387301/notes-service", "."]
+    dir: "./notes-service"
+
+images:
+  # push audit-service
+  - "gcr.io/loyal-gateway-387301/audit-service"
+  # push auth-service
+  - "gcr.io/loyal-gateway-387301/auth-service"
+  # push bff-service
+  - "gcr.io/loyal-gateway-387301/bff-service"
+  # push notes-service
+  - "gcr.io/loyal-gateway-387301/notes-service"

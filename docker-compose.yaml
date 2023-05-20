@@ -1,0 +1,47 @@
+# simple docker compose file
+
+version: '3.9'
+services:
+  # -------------------------------------
+  # bff service
+  # -------------------------------------
+  bff:
+    image: bff-service
+    build:
+      context: ./bff-service
+      dockerfile: service.dockerfile
+    ports:
+      - "80:3000"
+
+  # -------------------------------------
+  # notes service
+  # -------------------------------------
+  notes:
+    image: notes-service
+    build:
+      context: ./notes-service
+      dockerfile: service.dockerfile
+    ports:
+      - "81:3000"
+
+  # -------------------------------------
+  # auth service
+  # -------------------------------------
+  auth:
+    image: auth-service
+    build:
+      context: ./auth-service
+      dockerfile: service.dockerfile
+    ports:
+      - "82:3000"
+
+  # -------------------------------------
+  # audit service
+  # -------------------------------------
+  audit:
+    image: audit-service
+    build:
+      context: ./audit-service
+      dockerfile: service.dockerfile
+    ports:
+      - "83:3000"
