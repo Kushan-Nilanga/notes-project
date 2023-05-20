@@ -4,3 +4,5 @@ terraform.*
 account.json
 .terraform*
 .DS_Store
+*/package-lock.json
+*/node_modules
