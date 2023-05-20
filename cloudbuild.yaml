@@ -3,5 +3,5 @@
 
 steps:
   # simple echo
-  - name: "gcr.io/cloud-builders/echo"
-    args: ["Hello, world!"]
+  - name: "ubuntu"
+    args: ["echo", "Hello, world!"]
