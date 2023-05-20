@@ -125,6 +125,11 @@ steps:
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
       - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["replace", "-f", "service.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
 
   # ------------------------------------
   # set image
