@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+        - name: ui
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bff
+  template:
+    metadata:
+      labels:
+        app: bff
+    spec:
+      containers:
+        - name: bff
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audit-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audit
+  template:
+    metadata:
+      labels:
+        app: audit
+    spec:
+      containers:
+        - name: audit
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+        - name: audit-db
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: audit-db-volume
+              mountPath: /data/db
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+      volumes:
+        - name: audit-db-volume
+          emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+        - name: auth-db
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: auth-db-volume
+              mountPath: /data/db
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+      volumes:
+        - name: auth-db-volume
+          emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes
+  template:
+    metadata:
+      labels:
+        app: notes
+    spec:
+      containers:
+        - name: notes
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+        - name: notes-db
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: notes-db-volume
+              mountPath: /data/db
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+      volumes:
+        - name: notes-db-volume
+          emptyDir: {}

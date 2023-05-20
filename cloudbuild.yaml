@@ -62,6 +62,12 @@ steps:
         "service.dockerfile",
       ]
     dir: "./ui-service"
+    # deploy to GKE
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "deployment.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
 
 images:
   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
