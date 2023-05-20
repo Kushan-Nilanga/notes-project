@@ -41,8 +41,7 @@ resource "google_cloudbuild_trigger" "webhook-config-trigger" {
       branch = "^master$"
     }
   }
-
-  filename = "cloudbuild.yaml"
+  filename        = "cloudbuild.yaml"
 }
 
 output "console_url" {
