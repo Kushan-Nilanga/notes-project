@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$IMAGE_TAG"
+          image: "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:${IMAGE_TAG}"
           ports:
             - containerPort: 3000
 ---
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: bff
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$IMAGE_TAG
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:${IMAGE_TAG}
           ports:
             - containerPort: 3000
 ---
@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
         - name: audit
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$IMAGE_TAG
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:${IMAGE_TAG}
           ports:
             - containerPort: 3000
           env:
@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$IMAGE_TAG
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:${IMAGE_TAG}
           ports:
             - containerPort: 3000
           env:
@@ -138,7 +138,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$IMAGE_TAG
+          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:${IMAGE_TAG}
           ports:
             - containerPort: 3000
           env:
