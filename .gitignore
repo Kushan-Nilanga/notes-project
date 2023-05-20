@@ -1,0 +1,6 @@
+var.tf
+.terraform
+terraform.*
+account.json
+.terraform*
+.DS_Store
