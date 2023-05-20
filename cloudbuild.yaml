@@ -12,7 +12,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -24,7 +24,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -36,7 +36,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -48,7 +48,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -60,7 +60,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -80,31 +80,31 @@ steps:
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
+        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
       ]
 
   # ------------------------------------
@@ -115,80 +115,14 @@ steps:
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
       - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  - name: "gcr.io/cloud-builders/kubectl"
-    args: ["replace", "-f", "deployment.yaml"]
-    env:
-      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
   - name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "service.yaml"]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
       - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  - name: "gcr.io/cloud-builders/kubectl"
-    args: ["replace", "-f", "service.yaml"]
-    env:
-      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-
-  # ------------------------------------
-  # set image
-  # ------------------------------------
-  # - name: "gcr.io/cloud-builders/kubectl"
-  #   args:
-  #     [
-  #       "set",
-  #       "image",
-  #       "deployment/notes-deployment",
-  #       "notes=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes",
-  #     ]
-  #   env:
-  #     - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-  #     - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  # - name: "gcr.io/cloud-builders/kubectl"
-  #   args:
-  #     [
-  #       "set",
-  #       "image",
-  #       "deployment/auth-deployment",
-  #       "auth=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth",
-  #     ]
-  #   env:
-  #     - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-  #     - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  # - name: "gcr.io/cloud-builders/kubectl"
-  #   args:
-  #     [
-  #       "set",
-  #       "image",
-  #       "deployment/bff-deployment",
-  #       "bff=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff",
-  #     ]
-  #   env:
-  #     - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-  #     - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  # - name: "gcr.io/cloud-builders/kubectl"
-  #   args:
-  #     [
-  #       "set",
-  #       "image",
-  #       "deployment/audit-deployment",
-  #       "audit=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit",
-  #     ]
-  #   env:
-  #     - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-  #     - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
-  # - name: "gcr.io/cloud-builders/kubectl"
-  #   args:
-  #     [
-  #       "set",
-  #       "image",
-  #       "deployment/ui-deployment",
-  #       "ui=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui",
-  #     ]
-  #   env:
-  #     - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
-  #     - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
 
 options:
   logging: CLOUD_LOGGING_ONLY
