@@ -124,5 +124,73 @@ steps:
       - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
       - "IMAGE_TAG=$BUILD_ID"
 
+  # ------------------------------------
+  # update images
+  # ------------------------------------
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/notes-deployment",
+        "notes=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/auth-deployment",
+        "auth=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/bff-deployment",
+        "bff=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/audit-deployment",
+        "audit=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
+  - name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "set",
+        "image",
+        "deployment/ui-deployment",
+        "ui=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=notes-project-cluster"
+      - "IMAGE_TAG=$BUILD_ID"
+
 options:
   logging: CLOUD_LOGGING_ONLY
