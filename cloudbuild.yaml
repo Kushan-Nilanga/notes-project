@@ -1,0 +1,6 @@
+# cloudbuild template
+# https://cloud.google.com/cloud-build/docs/build-config
+
+steps:
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["echo", "Hello world!"]
