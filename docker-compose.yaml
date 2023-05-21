@@ -29,6 +29,8 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
       - MONGO_SERVICE_HOST=notes-db
+    depends_on:
+      - notes-db
   notes-db:
     image: mongo
     ports:
@@ -55,6 +57,8 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
       - MONGO_SERVICE_HOST=auth-db
+    depends_on:
+      - auth-db
   auth-db:
     image: mongo
     ports:
@@ -81,6 +85,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_SERVICE_HOST: audit-db
+    depends_on:
+      - audit-db
   audit-db:
     image: mongo
     ports:
