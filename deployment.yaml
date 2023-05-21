@@ -151,7 +151,7 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
             - name: MONGO_SERVICE_HOST
-              value: notes-db
+              value: localhost
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: notes-db
