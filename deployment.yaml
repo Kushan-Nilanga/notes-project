@@ -63,7 +63,7 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
             - name: MONGO_SERVICE_HOST
-              value: audit-db
+              value: localhost
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: audit-db
@@ -107,7 +107,7 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: example
             - name: MONGO_SERVICE_HOST
-              value: audit-db
+              value: localhost
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: auth-db
