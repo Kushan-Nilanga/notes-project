@@ -42,6 +42,7 @@ app.post("/users", async (req, res) => {
 
 app.post("/users/validate", async (req, res) => {
   try {
+
     const { email, password } = req.body;
 
     if (!email || !password) {

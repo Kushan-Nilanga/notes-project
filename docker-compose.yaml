@@ -10,9 +10,17 @@ services:
     build:
       context: ./bff-service
       dockerfile: service.dockerfile
+    environment:
+      - AUTH_SERVICE_URI=http://auth:3000
+      - NOTES_SERVICE_URI=http://notes:3000
+      - AUDIT_SERVICE_URI=http://audit:3000
     ports:
       - "80:3000"
     restart: always
+    networks:
+      - custom
+    depends_on:
+      - auth
 
   # -------------------------------------
   # notes service
@@ -31,6 +39,8 @@ services:
       - MONGO_SERVICE_HOST=notes-db
     depends_on:
       - notes-db
+    networks:
+      - custom
   notes-db:
     image: mongo
     ports:
@@ -41,6 +51,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     restart: always
+    networks:
+      - custom
 
   # -------------------------------------
   # auth service
@@ -59,6 +71,8 @@ services:
       - MONGO_SERVICE_HOST=auth-db
     depends_on:
       - auth-db
+    networks:
+      - custom
   auth-db:
     image: mongo
     ports:
@@ -69,7 +83,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     restart: always
-
+    networks:
+      - custom
   # -------------------------------------
   # audit service
   # -------------------------------------
@@ -87,6 +102,8 @@ services:
       MONGO_SERVICE_HOST: audit-db
     depends_on:
       - audit-db
+    networks:
+      - custom
   audit-db:
     image: mongo
     ports:
@@ -97,6 +114,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     restart: always
+    networks:
+      - custom
   # -------------------------------------
   # ui service
   # -------------------------------------
@@ -108,3 +127,9 @@ services:
     ports:
       - "84:3000"
     restart: always
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge

@@ -9,6 +9,8 @@ const mongo_password = process.env.MONGO_INITDB_ROOT_PASSWORD;
 const mongo_uri = `mongodb://${mongo_username}:${mongo_password}@${mongo_host}:27017/notes?authSource=admin`;
 
 const app = express();
+app.use(express.json());
+
 const port = 3000;
 
 mongoose
@@ -21,6 +23,25 @@ mongoose
   });
 
 app.get("/", (req, res) => res.send(`Hello from ${service_name}!`));
+
+const Audit = mongoose.model("Audit", {
+  user: String,
+  action: String,
+  timestamp: String,
+});
+
+app.post("/audit", async (req, res) => {
+  try {
+    const audit = new Audit(req.body);
+    await audit.save();
+    res.send(audit);
+    console.log(audit);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Audit.",
+    });
+  }
+});
 
 app.listen(port, () =>
   console.log(`${service_name} listening on port ${port}!`)
