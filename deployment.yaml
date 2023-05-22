@@ -37,6 +37,14 @@ spec:
           image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:latest
           ports:
             - containerPort: 3000
+            # defining environment variables
+          env:
+            - name: AUDIT_SERVICE_URI
+              value: http://audit:3000
+            - name: AUTH_SERVICE_URI
+              value: http://auth:3000
+            - name: NOTES_SERVICE_URI
+              value: http://notes:3000
 ---
 apiVersion: apps/v1
 kind: Deployment
