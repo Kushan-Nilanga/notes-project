@@ -155,3 +155,52 @@ app.delete(
     }
   }
 );
+
+// create user
+app.post("/create_user", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const { data } = await axios.post(`${auth_service_uri}/users`, {
+      email: email,
+      password: password,
+    });
+
+    post_audit_item({
+      user: email,
+      action: "create_user",
+      timestamp: new Date(),
+    });
+
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the User.",
+    });
+  }
+});
+
+// login user
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const { data } = await axios.post(
+      `${auth_service_uri}/users/authenticate`,
+      {
+        email: email,
+        password: password,
+      }
+    );
+
+    post_audit_item({
+      user: email,
+      action: "login",
+      timestamp: new Date(),
+    });
+
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while logging in.",
+    });
+  }
+});
