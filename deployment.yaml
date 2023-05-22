@@ -40,11 +40,11 @@ spec:
             # defining environment variables
           env:
             - name: AUDIT_SERVICE_URI
-              value: http://audit:3000
+              value: http://audit:80
             - name: AUTH_SERVICE_URI
-              value: http://auth:3000
+              value: http://auth:80
             - name: NOTES_SERVICE_URI
-              value: http://notes:3000
+              value: http://notes:80
 ---
 apiVersion: apps/v1
 kind: Deployment
