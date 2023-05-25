@@ -12,7 +12,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/audit:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -24,7 +24,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/auth:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -36,7 +36,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/bff:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -48,7 +48,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/notes:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -60,7 +60,7 @@ steps:
       [
         "build",
         "-t",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/ui:$BUILD_ID",
         ".",
         "-f",
         "service.dockerfile",
@@ -70,41 +70,41 @@ steps:
   # ------------------------------------
   # Push Stage
   # ------------------------------------
-  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes"
-  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth"
-  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff"
-  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit"
-  #   - "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui"
+  #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/notes"
+  #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/auth"
+  #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/bff"
+  #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/audit"
+  #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/ui"
 
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/notes:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/auth:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/bff:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/audit:$BUILD_ID",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/ui:$BUILD_ID",
       ]
 
   # ------------------------------------
@@ -133,7 +133,7 @@ steps:
         "set",
         "image",
         "deployment/notes-deployment",
-        "notes=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:$BUILD_ID",
+        "notes=australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/notes:$BUILD_ID",
       ]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
@@ -146,7 +146,7 @@ steps:
         "set",
         "image",
         "deployment/auth-deployment",
-        "auth=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:$BUILD_ID",
+        "auth=australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/auth:$BUILD_ID",
       ]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
@@ -159,7 +159,7 @@ steps:
         "set",
         "image",
         "deployment/bff-deployment",
-        "bff=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:$BUILD_ID",
+        "bff=australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/bff:$BUILD_ID",
       ]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
@@ -172,7 +172,7 @@ steps:
         "set",
         "image",
         "deployment/audit-deployment",
-        "audit=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:$BUILD_ID",
+        "audit=australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/audit:$BUILD_ID",
       ]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
@@ -185,7 +185,7 @@ steps:
         "set",
         "image",
         "deployment/ui-deployment",
-        "ui=australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:$BUILD_ID",
+        "ui=australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/ui:$BUILD_ID",
       ]
     env:
       - "CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a"
