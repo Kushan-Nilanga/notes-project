@@ -77,6 +77,21 @@ steps:
   #   - "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/ui"
 
   - name: "gcr.io/cloud-builders/docker"
+    args: ["pull", "mongo:latest"]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "tag",
+        "mongo:latest",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/mongo:latest",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "australia-southeast1-docker.pkg.dev/$PROJECT_ID/notes/mongo:latest",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
