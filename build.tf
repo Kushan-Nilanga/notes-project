@@ -36,7 +36,7 @@ resource "google_cloudbuild_trigger" "webhook-config-trigger" {
 
   github {
     owner = "Kushan-Nilanga"
-    name  = github_repository.git_repo.name
+    name = local.github.project_name
     push {
       branch = "^master$"
     }
