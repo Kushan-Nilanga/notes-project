@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: "australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/ui:latest"
+          image: "australia-southeast1-docker.pkg.dev/tempo-387808/notes/ui:latest"
           ports:
             - containerPort: 3000
 ---
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: bff
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/bff:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/bff:latest
           ports:
             - containerPort: 3000
             # defining environment variables
@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
         - name: audit
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/audit:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/audit:latest
           ports:
             - containerPort: 3000
           env:
@@ -75,7 +75,7 @@ spec:
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: audit-db
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/mongo:latest
           ports:
             - containerPort: 27017
           volumeMounts:
@@ -106,7 +106,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/auth:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/auth:latest
           ports:
             - containerPort: 3000
           env:
@@ -119,7 +119,7 @@ spec:
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: auth-db
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/mongo:latest
           ports:
             - containerPort: 27017
           volumeMounts:
@@ -150,7 +150,7 @@ spec:
     spec:
       containers:
         - name: notes
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/notes:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/notes:latest
           ports:
             - containerPort: 3000
           env:
@@ -163,7 +163,7 @@ spec:
             - name: IMAGE_TAG
               value: $(IMAGE_TAG)
         - name: notes-db
-          image: australia-southeast1-docker.pkg.dev/loyal-gateway-387301/notes/mongo:latest
+          image: australia-southeast1-docker.pkg.dev/tempo-387808/notes/mongo:latest
           ports:
             - containerPort: 27017
           volumeMounts:
