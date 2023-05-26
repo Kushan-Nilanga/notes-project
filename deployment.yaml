@@ -193,7 +193,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: slow
   hostPath:
-    path: "/mnt/data"
+    path: "/home/dathalage/mongo-pv"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
