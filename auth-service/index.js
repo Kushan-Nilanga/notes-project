@@ -15,11 +15,22 @@ const app = express();
 app.use(express.json());
 const port = 3000;
 
-mongoose.connect(mongo_uri, { useNewUrlParser: true }).then(() => {
-  console.log("Connected to MongoDB");
-});
+var mongo_connected = false;
 
-app.get("/", (req, res) => res.send(`Hello from ${service_name}!`));
+mongoose
+  .connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to MongoDB");
+    mongo_connected = true;
+  });
+
+app.get("/", (req, res) =>
+  res.send(
+    `Hello from ${service_name}! ${
+      mongo_connected ? "Connected to MongoDB" : "Not connected to MongoDB"
+    }`
+  )
+);
 
 /** this service handles use creation, authentication and jwt */
 const User = mongoose.model("User", {
@@ -42,7 +53,6 @@ app.post("/users", async (req, res) => {
 
 app.post("/users/validate", async (req, res) => {
   try {
-
     const { email, password } = req.body;
 
     if (!email || !password) {

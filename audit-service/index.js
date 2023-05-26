@@ -13,16 +13,22 @@ app.use(express.json());
 
 const port = 3000;
 
+var mongo_connected = false;
+
 mongoose
-  .connect(mongo_uri, { useNewUrlParser: true })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    console.log(`${service_name} connected to MongoDB`);
+  .connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to MongoDB");
+    mongo_connected = true;
   });
 
-app.get("/", (req, res) => res.send(`Hello from ${service_name}!`));
+app.get("/", (req, res) =>
+  res.send(
+    `Hello from ${service_name}! ${
+      mongo_connected ? "Connected to MongoDB" : "Not connected to MongoDB"
+    }`
+  )
+);
 
 const Audit = mongoose.model("Audit", {
   user: String,

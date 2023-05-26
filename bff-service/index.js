@@ -22,7 +22,10 @@ app.get("/", (req, res) => {
   Promise.all([notes, auth, audit])
     .then((values) => {
       res.send(
-        `Hello from bff-service! Notes: ${values[0].data} Auth: ${values[1].data} Audit: ${values[2].data}`
+        `Hello from bff-service! 
+        \nNotes: ${values[0].data} 
+        \nAuth: ${values[1].data} 
+        \nAudit: ${values[2].data}`
       );
     })
     .catch((err) => {
