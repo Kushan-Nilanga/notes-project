@@ -184,23 +184,25 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv-volume
+  name: mongo-pv-volume-v1
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: slow
+  storageClassName: local-storage
   hostPath:
     path: "/home/dathalage/mongo-pv"
+  claimRef:
+    namespace: default
+    name: mongo-pv-claim
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongo-pv-claim
 spec:
-  storageClassName: slow
   accessModes:
     - ReadWriteOnce
   resources:
