@@ -6,9 +6,31 @@ const passportJWT = require("passport-jwt");
 const app = express();
 app.use(express.json());
 
+// services
+const notes_service_uri = process.env.NOTES_SERVICE_URI;
+const auth_service_uri = process.env.AUTH_SERVICE_URI;
+const audit_service_uri = process.env.AUDIT_SERVICE_URI;
+
 const port = 3000;
 
-app.get("/", (req, res) => res.send("Hello from bff-service!"));
+app.get("/", (req, res) => {
+  // ping the notes, auth, and audit services
+  const notes = axios.get(`${notes_service_uri}/`);
+  const auth = axios.get(`${auth_service_uri}/`);
+  const audit = axios.get(`${audit_service_uri}/`);
+
+  Promise.all([notes, auth, audit])
+    .then((values) => {
+      res.send(
+        `Hello from bff-service! Notes: ${values[0].data} Auth: ${values[1].data} Audit: ${values[2].data}`
+      );
+    })
+    .catch((err) => {
+      res.send(
+        `Hello from bff-service! Notes: ${err} Auth: ${err} Audit: ${err}`
+      );
+    });
+});
 
 app.listen(port, () => console.log(`bff-service listening on port ${port}!`));
 
@@ -19,11 +41,6 @@ const jwtOptions = {
   jwtFromRequest: extractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: "secret",
 };
-
-// services
-const notes_service_uri = process.env.NOTES_SERVICE_URI;
-const auth_service_uri = process.env.AUTH_SERVICE_URI;
-const audit_service_uri = process.env.AUDIT_SERVICE_URI;
 
 passport.use(
   new jwtStrategy(jwtOptions, async (jwt_payload, done) => {
