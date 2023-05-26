@@ -80,7 +80,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: audit-db-volume
-              mountPath: /data/db
+              mountPath: /data/db/audit
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: root
@@ -88,7 +88,8 @@ spec:
               value: example
       volumes:
         - name: audit-db-volume
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -124,7 +125,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: auth-db-volume
-              mountPath: /data/db
+              mountPath: /data/db/auth
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: root
@@ -132,7 +133,8 @@ spec:
               value: example
       volumes:
         - name: auth-db-volume
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -168,7 +170,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: notes-db-volume
-              mountPath: /data/db
+              mountPath: /data/db/notes
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: root
@@ -176,4 +178,31 @@ spec:
               value: example
       volumes:
         - name: notes-db-volume
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv-volume
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: slow
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pv-claim
+spec:
+  storageClassName: slow
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
