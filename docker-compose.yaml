@@ -129,6 +129,8 @@ services:
     restart: always
     networks:
       - custom
+    environment:
+      - BFF_SERVICE_URL=http://bff:3000
 
 networks:
   custom:

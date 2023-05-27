@@ -6,6 +6,10 @@ const passportJWT = require("passport-jwt");
 const app = express();
 app.use(express.json());
 
+// cors
+const cors = require("cors");
+app.use(cors());
+
 // services
 const notes_service_uri = process.env.NOTES_SERVICE_URI;
 const auth_service_uri = process.env.AUTH_SERVICE_URI;
