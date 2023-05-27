@@ -11,7 +11,10 @@ COPY package.json ./
 RUN npm install
 
 # Bundle app source
-COPY index.js /app/
+COPY . /app/
+
+# jest
+RUN npx jest
 
 # Expose port 3000
 EXPOSE 3000
