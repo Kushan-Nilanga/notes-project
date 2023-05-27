@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const bff_url = process.env.BFF_SERVICE_URL || "http://34.151.114.10/";
+const bff_url = process.env.BFF_SERVICE_URL || "http://34.151.114.10";
 
 /**
  * BFF Endpoints
