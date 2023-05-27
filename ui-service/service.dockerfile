@@ -11,13 +11,13 @@ COPY package.json ./
 RUN npm install
 
 # Bundle app source
-COPY . /app/
+COPY . .
 
-# jest
+# jest test
 RUN npx jest
 
 # Expose port 3000
 EXPOSE 3000
 
 # Run app
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
