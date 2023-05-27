@@ -3,6 +3,7 @@ import { Col, Container, Nav, Row, Button, Form, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { XCircleFill as Delete } from "react-bootstrap-icons";
 
 const bff_url = process.env.BFF_SERVICE_URL || "http://34.151.114.10";
 
@@ -73,18 +74,26 @@ const SideBar = ({ notes_props, onActive, onDelete }) => {
     <Nav className="w-auto">
       {notes &&
         notes.map((note) => (
-          <Nav.Item className="w-100 border-bottom" key={note._id}>
-            <div className="d-flex justify-content-between">
+          <Nav.Item
+            className="w-100 border-bottom align-items-center"
+            key={note._id}
+          >
+            <div className="d-flex align-items-center">
               <Nav.Link
                 key={note._id}
                 className="w-100"
                 onClick={async () => await onActive(note._id)}
               >
-                {note.title}
+                <strong>{note.title}</strong>
+                <p className="m-0 text-muted">
+                  {note.content.length > 20
+                    ? note.content.substring(0, 20) + "..."
+                    : note.content}
+                </p>
               </Nav.Link>
-              <Button
-                className="btn-sm m-1 p-1"
-                variant="danger"
+              <Delete
+                color="#df0000"
+                className="m-2 h-5 me-3"
                 onClick={async () => {
                   try {
                     await delete_note(note._id);
@@ -93,9 +102,7 @@ const SideBar = ({ notes_props, onActive, onDelete }) => {
                     console.log(err);
                   }
                 }}
-              >
-                X
-              </Button>
+              />
             </div>
           </Nav.Item>
         ))}
@@ -178,10 +185,6 @@ const Note = ({ note_prop, onUpdate }) => {
     }
   }, [note_prop]);
 
-  useEffect(() => {
-    onUpdate(note);
-  }, [note]);
-
   return (
     note && (
       <div className="h-100">
@@ -193,7 +196,7 @@ const Note = ({ note_prop, onUpdate }) => {
           )}
           {titleInFocus && (
             <input
-              className="w-100"
+              className=""
               onChange={async (e) =>
                 await setNote({ ...note, title: e.target.value })
               }
@@ -201,6 +204,19 @@ const Note = ({ note_prop, onUpdate }) => {
               value={note.title}
             />
           )}
+          <Button
+            className="btn m-3"
+            variant="primary"
+            onClick={async () => {
+              try {
+                await onUpdate(note);
+              } catch (err) {
+                console.log(err);
+              }
+            }}
+          >
+            Save
+          </Button>
         </h1>
         {!contentInFocus && (
           <p onClick={async () => await setContentFocus(true)}>
@@ -209,7 +225,7 @@ const Note = ({ note_prop, onUpdate }) => {
         )}
         {contentInFocus && (
           <textarea
-            className="w-100 vh-100"
+            className="w-100 h-5"
             onChange={async (e) =>
               await setNote({ ...note, content: e.target.value })
             }
@@ -250,11 +266,10 @@ function App() {
               await setNotes(res.data);
             }}
           />
-
-          {!token && <span className="text-danger p-3">Not logged in</span>}
+          {!token && <span className="text-danger px-2">Not logged in</span>}
           {token && (
             <div>
-              <span className="text-success p-3">Logged in</span>
+              <span className="text-success px-3">Logged in</span>
               <Button
                 className="btn btn-danger btn-sm"
                 onClick={async () => {
@@ -266,7 +281,7 @@ function App() {
               </Button>
             </div>
           )}
-          <hr />
+          &nbsp;
           {token && (
             <SideBar
               notes_props={notes}
@@ -286,7 +301,6 @@ function App() {
               }}
             />
           )}
-          <hr />
           {token && (
             <Button
               className="btn-sm m-3 btn-secondary"
@@ -295,6 +309,7 @@ function App() {
                 try {
                   await create_note("New Note", "Click here to edit the note");
                   const res = await get_notes();
+                  console.log("called");
                   setNotes(res.data);
                 } catch (err) {
                   console.log(err);
@@ -317,11 +332,7 @@ function App() {
               note_prop={active}
               onUpdate={async (note) => {
                 await setUpdating(true);
-                const updated = await update_note(
-                  note.id,
-                  note.title,
-                  note.content
-                );
+                await update_note(note.id, note.title, note.content);
                 get_notes()
                   .then((res) => {
                     setNotes(res.data);
