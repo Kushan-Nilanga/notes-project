@@ -17,6 +17,9 @@ spec:
           image: "australia-southeast1-docker.pkg.dev/tempo-387808/notes/ui:latest"
           ports:
             - containerPort: 3000
+          env:
+            - name: BFF_SERVICE_URI
+              value: http://bff:80
 ---
 apiVersion: apps/v1
 kind: Deployment
