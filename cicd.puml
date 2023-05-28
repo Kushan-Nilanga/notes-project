@@ -1,0 +1,48 @@
+@startuml
+
+title "CI/CD Diagram"
+skinparam linetype ortho
+left to right direction
+
+package local{
+  usecase service_codebases
+  usecase terraform
+}
+
+terraform .-> github: terraform apply
+terraform .-> gcp: terraform apply
+
+package github {
+  usecase repository
+}
+
+local --> repository: git push
+
+package gcp {
+
+  repository --> cloudbuild
+  package cloudbuild {
+    (build) .-> (push)
+    (push) .-> (deploy)
+  }
+
+  package artifact_repo {
+    (push)-->(auth_image): docker push
+    (push)-->(notes_image): docker push
+    (push)-->(audit_image): docker push
+    (push)-->(ui_image): docker push
+    (push)-->(mongo_image): docker push
+  }
+
+  package k8s{
+    (cluster) .-> auth_image
+    (cluster) .-> notes_image
+    (cluster) .-> audit_image
+    (cluster) .-> ui_image
+    (cluster) .-> mongo_image
+  }
+
+  (deploy) --> (cluster): kubectl apply
+}
+
+@enduml
