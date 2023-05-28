@@ -104,7 +104,7 @@ spec:
       volumes:
         - name: audit-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v1
+            claimName: mongo-pv-claim-v2
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -161,7 +161,7 @@ spec:
       volumes:
         - name: auth-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v1
+            claimName: mongo-pv-claim-v2
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -218,32 +218,33 @@ spec:
       volumes:
         - name: notes-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v1
+            claimName: mongo-pv-claim-v2
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv-volume-v1
+  name: mongo-pv-volume-v2
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  storageClassName: standard
   hostPath:
     path: "/home/dathalage/mongo-pv"
   claimRef:
     namespace: default
-    name: mongo-pv-claim-v1
+    name: mongo-pv-claim-v2
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pv-claim-v1
+  name: mongo-pv-claim-v2
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: standard
   resources:
     requests:
       storage: 1Gi
