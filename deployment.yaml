@@ -292,7 +292,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:
-    path: "/home/dathalage/mongo-pv"
+    path: "/home/dathalage/mongo-notes"
   claimRef:
     namespace: default
     name: mongo-pv-claim-notes
