@@ -240,7 +240,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pv-claim-audit
+  name: mongo-pv-claim-auth
 spec:
   accessModes:
     - ReadWriteOnce
