@@ -104,7 +104,7 @@ spec:
       volumes:
         - name: audit-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v2
+            claimName: mongo-pv-claim-audit
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -161,7 +161,7 @@ spec:
       volumes:
         - name: auth-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v2
+            claimName: mongo-pv-claim-auth
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -218,12 +218,72 @@ spec:
       volumes:
         - name: notes-db-volume
           persistentVolumeClaim:
-            claimName: mongo-pv-claim-v2
+            claimName: mongo-pv-claim-notes
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv-volume-v2
+  name: mongo-pv-volume-auth
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: "/home/dathalage/mongo-auth"
+  claimRef:
+    namespace: default
+    name: mongo-pv-claim-auth
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pv-claim-audit
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv-volume-audit
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: "/home/dathalage/mongo-audit"
+  claimRef:
+    namespace: default
+    name: mongo-pv-claim-audit
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pv-claim-audit
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv-volume-notes
 spec:
   capacity:
     storage: 1Gi
@@ -235,12 +295,12 @@ spec:
     path: "/home/dathalage/mongo-pv"
   claimRef:
     namespace: default
-    name: mongo-pv-claim-v2
+    name: mongo-pv-claim-notes
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pv-claim-v2
+  name: mongo-pv-claim-notes
 spec:
   accessModes:
     - ReadWriteOnce
@@ -248,6 +308,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
 ---
 apiVersion: v1
 kind: Secret
