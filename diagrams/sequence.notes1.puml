@@ -1,0 +1,42 @@
+@startuml
+
+participant "UI" as ui
+participant "BFF" as bff
+participant "AUTH" as auth
+participant "AUDIT" as audit
+participant "NOTES" as notes
+
+== Notes ==
+ui -> bff: POST /create_note
+activate bff
+bff -> auth: POST /users/validate
+activate auth
+auth -> auth: check token
+auth -> bff: 200 OK
+deactivate auth
+bff -> notes: POST /notes
+activate notes
+notes -> notes: create note in monogodb
+notes -> bff: 200 OK
+deactivate notes
+bff --> audit: POST /audit
+bff -> ui: 200 OK
+deactivate bff
+
+ui -> bff: GET /get_notes
+activate bff
+bff -> auth: POST /users/validate
+activate auth
+auth -> auth: check token
+auth -> bff: 200 OK
+deactivate auth
+bff -> notes: GET /notes
+activate notes
+notes -> notes: get notes from monogodb
+notes -> bff: 200 OK
+deactivate notes
+bff --> audit: POST /audit
+bff -> ui: 200 OK
+deactivate bff
+
+@enduml
